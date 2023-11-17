@@ -4,6 +4,9 @@ on:
   release:
     types: [ published ]
 
+permissions:
+  contents: write
+
 # Build the dotnet app and publish the exe on the release
 jobs:
   build:
@@ -23,21 +26,19 @@ jobs:
             artifact_name: Calculator
             upload_name: calculator-osx64
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.100'
-    - name: Publish
-      run: dotnet publish -c Release -r ${{ matrix.os }} -p:AssemblyVersion=${{ env.VERSION }} -p:Version=${{ env.VERSION }}-production
-    - name: Publish Release Asset
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./Calculator/bin/Release/net8.0/${{ matrix.os }}/publish/${{ matrix.artifact_name }}
-        asset_name: ${{ matrix.upload_name }}
-        tag: ${{ github.ref }}
-        overwrite: true
-
-permissions:
-  contents: write
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.100'
+      - name: Application Build
+        run: dotnet publish -c Release -r ${{ matrix.os }} -p:AssemblyVersion=${{ env.VERSION }} -p:Version=${{ env.VERSION }}-production
+      - name: Upload Release Asset
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./Calculator/bin/Release/net8.0/${{ matrix.os }}/publish/${{ matrix.artifact_name }}
+          asset_name: ${{ matrix.upload_name }}
+          tag: ${{ github.ref }}
+          overwrite: true
