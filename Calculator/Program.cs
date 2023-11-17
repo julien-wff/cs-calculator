@@ -23,6 +23,13 @@ public abstract class Program
                 versionCommand.Run(args);
                 break;
 
+            case "help":
+            case "-h":
+            case "--help":
+                var helpCommand = new HelpCommand();
+                helpCommand.Run(args);
+                break;
+
             case "add":
                 var addCommand = new AddCommand();
                 addCommand.Run(args);
