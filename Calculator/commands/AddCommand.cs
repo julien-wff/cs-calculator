@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace Calculator.commands;
 
@@ -16,13 +17,13 @@ public class AddCommand : Command
                 return false;
         }
 
-        if (!double.TryParse(args[1], out _))
+        if (!double.TryParse(args[1], NumberStyles.Any, CultureInfo.InvariantCulture, out _))
         {
             Console.WriteLine($"Error: {args[1]} is not a number");
             return false;
         }
 
-        if (!double.TryParse(args[2], out _))
+        if (!double.TryParse(args[2], NumberStyles.Any, CultureInfo.InvariantCulture, out _))
         {
             Console.WriteLine($"Error: {args[2]} is not a number");
             return false;
@@ -40,8 +41,8 @@ public class AddCommand : Command
         if (!CheckArgs(args))
             return false;
 
-        var number1 = double.Parse(args[1]);
-        var number2 = double.Parse(args[2]);
+        var number1 = double.Parse(args[1], CultureInfo.InvariantCulture);
+        var number2 = double.Parse(args[2], CultureInfo.InvariantCulture);
         var result = number1 + number2;
 
         Console.WriteLine(result);
