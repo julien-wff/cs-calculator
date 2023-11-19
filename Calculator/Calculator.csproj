@@ -7,6 +7,18 @@
         <SelfContained>true</SelfContained>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <PublishTrimmed>true</PublishTrimmed>
+        <!-- Branding -->
+        <ApplicationIcon>Assets/Calculator.ico</ApplicationIcon>
+        <Authors>ProSoft</Authors>
+        <Company>ProSoft</Company>
+        <Product>Calculator</Product>
+        <Copyright>Copyright © 2023 ProSoft</Copyright>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <AssemblyTitle>Calculator</AssemblyTitle>
+        <AssemblyDescription>A simple CLI calculator</AssemblyDescription>
+        <AssemblyCompany>ProSoft</AssemblyCompany>
+        <AssemblyProduct>Calculator</AssemblyProduct>
+        <AssemblyCopyright>Copyright © 2023 ProSoft</AssemblyCopyright>
     </PropertyGroup>
 
 </Project>
