@@ -35,6 +35,11 @@ public abstract class Program
                 addCommand.Run(args);
                 break;
 
+            case "subtract":
+                var subtractCommand = new SubtractCommand();
+                subtractCommand.Run(args);
+                break;
+
             default:
                 Console.WriteLine($"Error: Unknown argument {args[0]}");
                 break;
