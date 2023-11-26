@@ -39,15 +39,17 @@ jobs:
         with:
           dotnet-version: '8.0.100'
 
-      - name: Install SonarScanner
-        run: dotnet tool install --global dotnet-sonarscanner
+      - name: Install SonarScanner and dotnet-coverage
+        run: |
+          dotnet tool install --global dotnet-sonarscanner
+          dotnet tool install --global dotnet-coverage
 
       - name: Run SonarScanner Analysis and Tests Coverage
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
-          dotnet sonarscanner begin /k:"julien-wff_cs-calculator_AYwLqk7JzV9IGMCah1nR" /d:sonar.token="${SONAR_TOKEN}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          dotnet sonarscanner begin /k:"julien-wff_cs-calculator_AYwLqk7JzV9IGMCah1nR" /d:sonar.token="${SONAR_TOKEN}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
           dotnet build --no-incremental
-          dotnet test --collect "Code Coverage"
-          dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"
+          dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+          dotnet sonarscanner end /d:sonar.token="${SONAR_TOKEN}"
