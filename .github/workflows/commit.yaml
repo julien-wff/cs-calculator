@@ -40,7 +40,9 @@ jobs:
           dotnet-version: '8.0.100'
 
       - name: Install SonarScanner and dotCover
-        run: dotnet tool install --global dotnet-sonarscanner JetBrains.dotCover.GlobalTool
+        run: |
+          dotnet tool install --global dotnet-sonarscanner
+          dotnet tool install --global JetBrains.dotCover.GlobalTool
 
       - name: Run SonarScanner Analysis
         env:
