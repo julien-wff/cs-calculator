@@ -39,14 +39,15 @@ jobs:
         with:
           dotnet-version: '8.0.100'
 
-      - name: Install SonarCloud Scanner
-        run: dotnet tool install --global dotnet-sonarscanner
+      - name: Install SonarScanner and dotCover
+        run: dotnet tool install --global dotnet-sonarscanner JetBrains.dotCover.GlobalTool
 
-      - name: Run SonarCloud Analysis
+      - name: Run SonarScanner Analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
-          dotnet sonarscanner begin /k:"julien-wff_cs-calculator_AYwLqk7JzV9IGMCah1nR" /d:sonar.token="${SONAR_TOKEN}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
-          dotnet build
+          dotnet sonarscanner begin /k:"julien-wff_cs-calculator_AYwLqk7JzV9IGMCah1nR" /d:sonar.token="${SONAR_TOKEN}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.cs.dotCover.reportsPaths=dotcover.Output.html
+          dotnet build --no-incremental
+          dotnet dotcover test --dcReportType=HTML
           dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"
