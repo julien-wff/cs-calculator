@@ -51,5 +51,5 @@ jobs:
         run: |
           dotnet sonarscanner begin /k:"julien-wff_cs-calculator_AYwLqk7JzV9IGMCah1nR" /d:sonar.token="${SONAR_TOKEN}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.cs.dotCover.reportsPaths=dotcover.Output.html
           dotnet build --no-incremental
-          dotnet dotcover test --dcReportType=HTML
+          dotnet dotcover test --dcReportType=HTML --dcOutput=dotcover.Output.html --no-build --verbosity normal
           dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"
